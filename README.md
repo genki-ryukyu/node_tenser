@@ -28,3 +28,18 @@ npm run dev
 npm run build
 ```
 # node_tenser
+```sh
+npm list
+├── @tensorflow/tfjs-node-gpu@4.13.0
+├── @tensorflow/tfjs-node@4.13.0
+├── @vitejs/plugin-vue@4.4.1
+├── canvas@2.11.2
+├── corepack@0.23.0
+├── sharp@0.32.6
+├── tensorflow.js@0.0.1
+├── undici@5.27.2
+├── vite@4.5.0
+└── vue@3.3.8
+```
+
+
