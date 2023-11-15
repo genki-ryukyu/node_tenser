@@ -27,7 +27,34 @@ npm run dev
 ```sh
 npm run build
 ```
-# node_tenser
+#　扱い方
+```sh
+node main.js
+```
+出力例
+```sh
+[ 600, 600, 3 ]
+[ 200, 200, 3 ]
+[ 1, 200, 200, 3 ]
+Tensor {
+  kept: false,
+  isDisposedInternal: false,
+  shape: [ 1, 4 ],
+  dtype: 'float32',
+  size: 4,
+  strides: [ 4 ],
+  dataId: {},
+  id: 94,
+  rankType: '2',
+  scopeId: 4
+}
+0
+円柱型ですよ
+```
+mian.jsのimagePathを同ディレクトリ上にある別の画像に差し替えると、他の画像でも使えます。
+
+
+# パッケージlist
 私はnpm -vで10.2.3でした。
 この中で使うのは、主に@tensorflow/tfjs-node@4.13.0, sharp@0.32.6, canvas@2.11.2です。この三つが入っていれば問題ないと思われます。
 ```sh
