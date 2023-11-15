@@ -28,6 +28,8 @@ npm run dev
 npm run build
 ```
 # node_tenser
+私はnpm -vで10.2.3でした。
+この中で使うのは、主に@tensorflow/tfjs-node@4.13.0, sharp@0.32.6, canvas@2.11.2です。この三つが入っていれば問題ないと思われます。
 ```sh
 npm list
 ├── @tensorflow/tfjs-node-gpu@4.13.0
@@ -42,4 +44,18 @@ npm list
 └── vue@3.3.8
 ```
 
+# 警告
+npmのverは10.2.3です。
+ダウングレードさせた場合に、packageが使えなくなる恐れがあります。
 
+```sh
+npm -v
+```
+上記を用いてverを確認しましょう。もし異なる場合、
+
+```sh
+npm install npm@10.2.3
+```
+を使います。その上でver確認して変わらなかった場合（←私）は、sudoを用いました。sudoは慎重に扱いましょう.
+
+また、パッケージイントール後　→　npmのver変更を行った人は、@tensorflow/tfjs-nodeが使えなくなってる可能性があります。node main.jsでError: Cannot find module '@tensorflow/tfjs-node'が出た場合、一度npm uninstall @tensorflow/tfjs-nodeを行い、再度npm install @tensorflow/tfjs-nodeを行うと良いでしょう。

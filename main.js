@@ -1,4 +1,4 @@
-//import tf from tensorflow.js
+//これは、nodeにてtensorflowjsを扱うjsファイル
 const tf =  require("@tensorflow/tfjs-node");
 const fs = require('fs');
 const path = require('path');
