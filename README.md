@@ -86,3 +86,6 @@ npm install npm@10.2.3
 を使います。その上でver確認して変わらなかった場合（←私）は、sudoを用いました。sudoは慎重に扱いましょう.
 
 また、パッケージイントール後　→　npmのver変更を行った人は、@tensorflow/tfjs-nodeが使えなくなってる可能性があります。node main.jsでError: Cannot find module '@tensorflow/tfjs-node'が出た場合、一度npm uninstall @tensorflow/tfjs-nodeを行い、再度npm install @tensorflow/tfjs-nodeを行うと良いでしょう。
+# 参考サイト
+https://qiita.com/everylittle/items/519797589b9760d4bff0
+
