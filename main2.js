@@ -2,22 +2,26 @@
 
 // const { kArray } = require("opencv-nodejs");
 
-let imgElement = document.getElementById('imageSrc');
-let inputElement = document.getElementById('fileInput');
+// let imgElement = document.getElementById('imageSrc');
+// let inputElement = document.getElementById('fileInput');
 
-let BLUR = 21
-let CANNY_THRESH_1 = 10
-let CANNY_THRESH_2 = 100
-let MASK_DILATE_ITER = 10
-let MASK_ERODE_ITER = 10
+// let BLUR = 21
+// let CANNY_THRESH_1 = 10
+// let CANNY_THRESH_2 = 100
+// let MASK_DILATE_ITER = 10
+// let MASK_ERODE_ITER = 10
+
+// let imgElement = document.getElementById('imageSrc');
+// let inputElement = document.getElementById('fileInput');
+// inputElement.addEventListener('change', (e) => {
+//   imgElement.src = URL.createObjectURL(e.target.files[0]);
+// }, false);
 
 
-inputElement.addEventListener('change', (e) => {
-  imgElement.src = URL.createObjectURL(e.target.files[0]);
-}, false);
 
 
 imgElement.onload = function() {
+  
     let mat = cv.imread(imgElement);
     //let mat1 = cv.bitwise_not(mat)
     const grayscale = new cv.Mat();
@@ -87,7 +91,7 @@ imgElement.onload = function() {
 
     
 
-    let newSize = new cv.Size(157,100);
+    let newSize = new cv.Size(157,100);//円柱だった場合のサイズ
     // 画像をリサイズ
     let dst2 = new cv.Mat();
     cv.resize(roi, dst2, newSize, 0, 0, cv.INTER_AREA); 
@@ -106,22 +110,16 @@ imgElement.onload = function() {
 
     let canvas = document.createElement('canvas');
     cv.imshow(canvas,combined);
-    let dataURL = canvas.toDataURL('image/png');
-    cv.imshow('canvasOutput',combined);
-      
-    // ダウンロード用リンクを作成してクリックさせる
-    let link = document.createElement('a');
-    link.href = dataURL;
-    link.download = 'created_image.png'; // 保存する画像ファイルの名前
-    link.click();
-
-
 
     
-
-
-
-
+    cv.imshow('canvasOutput',combined);
+      
+    // let dataURL = canvas.toDataURL('image/png');
+    // ダウンロード用リンクを作成してクリックさせる
+    // let link = document.createElement('a');
+    // link.href = dataURL;
+    // link.download = 'created_image.png'; // 保存する画像ファイルの名前
+    // link.click();
   };
 
 // var Module = {
