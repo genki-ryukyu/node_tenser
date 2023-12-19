@@ -1,9 +1,20 @@
-async function run(){
+async function run(captures){
   const model = await tf.loadLayersModel('tfjs_model/model.json');
   // const targetImg = document.getElementById('input_image');
 
-  await new Promise(resolve => imgElement.onload = resolve);
+  const latestImageData = captures[captures.length - 1];
+  const imgElement = new Image();
+  imgElement.src = latestImageData;
+  imgElement.onload = async () => {
+    await new Promise(resolve => {
+      imgElement.onload = resolve;
+    });
+  }
+
+
   const tensor = tf.browser.fromPixels(imgElement);
+  //ここチェック
+  console.log(imgElement)
 
   console.log(tensor.shape)
   const resizedImage = tf.image.resizeBilinear(tensor, [200, 200]);//次元調整{200, 200}
@@ -123,7 +134,9 @@ async function run(){
     
   cv.imshow('canvasOutput',combined);
 
+
 }
 
-run();
 
+
+vueInstance.$on('captures-updated', run);

@@ -5,37 +5,75 @@
 <title>Hello OpenCV.js</title>
 </head>
 <body>
-      <div id="app"></div>
+  <div id="app">
+    <div>
+      <video ref="video" id="video" width="500" height="500" autoplay></video>
+      <div>
+        <button color="info" id="snap" v-on:click="capture()">Snap Photo</button>
+      </div>
+      <canvas ref="canvas" id="canvas" width="500" height="500"></canvas>
+      <ul>
+      <li class="capture" v-for="c in captures" v-bind:key="c.d">
+        <img v-bind:src="c" height="50" />
+      </li>
+      </ul>
+    </div>
+  </div>
   
-    <!-- <script type="module" src="/src/main.js"></script> -->
-    <!-- <div><img src="image_enchuu1.JPEG" id="input_image"></div> -->
-
-
-
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const vueInstance = new Vue({
+      el: '#app',
+      data: {
+        video: {},
+        canvas: {},
+        captures: []
+      },
+      mounted() {
+        this.video = this.$refs.video;
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+          const constraints = {
+            video: {
+              facingMode: 'environment' // 'environment'は外部カメラを指定します
+            }
+          };
+    
+          navigator.mediaDevices.getUserMedia(constraints)
+            .then(stream => {
+              this.video.srcObject = stream;
+              this.video.play();
+            })
+            .catch(error => {
+              console.error('Error accessing the camera:', error);
+            });
+        }
+      },
+      methods: {
+        capture () {
+          this.canvas = this.$refs.canvas
+          this.canvas.getContext('2d').drawImage(this.video, 0, 0, 500, 500)
+          this.captures.push(this.canvas.toDataURL('image/png'))
+          //console.log(this.captures)
+          //const latestImageData = this.captures[this.captures.length - 1];
+          this.$emit('captures-updated', this.captures);
+        }
+      }
+    });
 
     
 
-    <!-- <script>
-      let BLUR = 21
-      let CANNY_THRESH_1 = 10
-      let CANNY_THRESH_2 = 100
-      let MASK_DILATE_ITER = 10
-      let MASK_ERODE_ITER = 10
-      let imgElement = document.getElementById('imageSrc');
-      let inputElement = document.getElementById('fileInput');
-      inputElement.addEventListener('change', (e) => {
-        imgElement.src = URL.createObjectURL(e.target.files[0]);
-      }, false);
-    </script> -->
+  </script>
    
+
+
 
     <h2>Hello OpenCV.js</h2>
     <p id="status">OpenCV.js is loading...</p>
     <div>
-      <div class="inputoutput">
-        <img id="imageSrc" alt="No Image" />
+      <!-- <div class="inputoutput">
+        <img id="imageSrc" alt="Image" />
         <div class="caption">imageSrc <input type="file" id="fileInput" name="file" /></div>
-      </div>
+      </div> -->
 
       <script>
       let BLUR = 21
@@ -43,12 +81,27 @@
       let CANNY_THRESH_2 = 100
       let MASK_DILATE_ITER = 10
       let MASK_ERODE_ITER = 10
-      let imgElement = document.getElementById('imageSrc');
-      let inputElement = document.getElementById('fileInput');
+      let imgElement = document.getElementById('imagesrc'); 
+      //let inputElement = document.getElementById('fileInput');
 
-      inputElement.addEventListener('change', (e) => {
-        imgElement.src = URL.createObjectURL(e.target.files[0]);
-      }, false);
+
+      //inputElement.addEventListener('change', (e) => {
+      //  imgElement.src = URL.createObjectURL(e.target.files[0]);
+      //}, false);
+
+      
+
+
+
+
+
+
+
+      //vueInstance.$on('captures-updated', captures => {
+        //imgElement.src = captures[captures.length - 1]; ; // captures の内容がコンソールに表示されます
+      //}, false);
+
+
 
       </script>
 
