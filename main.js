@@ -1,3 +1,5 @@
+let list = [];
+
 async function run(captures){
   const model = await tf.loadLayersModel('tfjs_model/model.json');
   // const targetImg = document.getElementById('input_image');
@@ -14,7 +16,7 @@ async function run(captures){
 
   const tensor = tf.browser.fromPixels(imgElement);
   //ここチェック
-  console.log(imgElement)
+  //console.log(imgElement)
 
   console.log(tensor.shape)
   const resizedImage = tf.image.resizeBilinear(tensor, [200, 200]);//次元調整{200, 200}
@@ -44,10 +46,27 @@ async function run(captures){
 
 
   let mat = cv.imread(imgElement);
+
+  let Npixels = mat.data;
+  let values = [];
+  for (let i = 0; i < Npixels.length; i += 4) {
+    values.push(Npixels[i]); // Rチャンネルの値を取得
+  }
+  values.sort((a, b) => a - b); // 昇順ソート
+  let medVal = values[Math.floor(values.length / 2)];
+  let sigma = 0.33;
+  let minVal = Math.max(0, (1.0 - sigma) * medVal);
+  let maxVal = Math.min(255, (1.0 + sigma) * medVal);
+  
+
+
   const grayscale = new cv.Mat();
   cv.cvtColor(mat, grayscale, cv.COLOR_BGR2GRAY);
   const edges = new cv.Mat();
-  cv.Canny(grayscale, edges, 10, 100);    
+  cv.Canny(grayscale, edges, minVal, maxVal);  
+  
+  
+
   const dilateKernel = cv.getStructuringElement(cv.MORPH_RECT, new cv.Size(3, 3));
   cv.dilate(edges, edges, new cv.Mat(), new cv.Point(-1, -1), 1);    
   cv.erode(edges, edges, new cv.Mat(), new cv.Point(-1, -1), 1);
@@ -95,10 +114,12 @@ async function run(captures){
 
   let dst = mat.clone();
   let cardCnt = contours.get(maxContourIdx);
-  let lineColor = new cv.Scalar(0, 0, 0, 255);
+  let lineColor = new cv.Scalar(0, 0, 0, 255);//今回は
   let thickness = 9;
   // cv.drawContours(dst, contours, maxContourIdx, lineColor, thickness, cv.LINE_8);
   // cv.imshow('canvasOutput',dst);
+
+  
 
   const boundingRect = cv.boundingRect(contours.get(maxContourIdx));
   const roi = dst.roi(boundingRect);
@@ -133,7 +154,21 @@ async function run(captures){
 
     
   cv.imshow('canvasOutput',combined);
+  
+  list.push(combined);
 
+  alert(list)
+  if(list.length == 3){
+    ///////////////////////////
+    //ここで、画面遷移のコードを行う。その際、listの中に画像3枚が入っているので、これを用いるとする。
+    alert("完了です。ここから画面遷移いたします")
+    ////////////////////////////
+    ////////////////////////////
+    ////////////////////////////
+    ////////////////////////////
+    ////////////////////////////
+    ////////////////////////////
+  }
 
 }
 
