@@ -5,96 +5,16 @@
 <title>Hello OpenCV.js</title>
 </head>
 <body>
-<h2>Hello OpenCV.js</h2>
 
 <p id="status">OpenCV.js is loading...</p>
 <div>
   <div class="inputoutput">
-    <img id="imageSrc" alt="No Image" />
-    <div class="caption">imageSrc <input type="file" id="fileInput" name="file" /></div>
-  </div>
-  <div class="inputoutput">
     <canvas id="canvasOutput" ></canvas>
     <div class="caption">canvasOutput</div>
   </div>
+  <script src="main3.js"></script> 
+  <script src="tf.min.js"></script>
+  <script async src="opencv.js" type="text/javascript"></script>
 </div>
-
-
-
-<div id="app">
-  <div>
-    <video ref="video" id="video" width="500" height="500" autoplay></video>
-    <div>
-      <button color="info" id="snap" v-on:click="capture()">Snap Photo</button>
-    </div>
-    <canvas ref="canvas" id="canvas" width="500" height="500"></canvas>
-    <ul>
-    <li class="capture" v-for="c in captures" v-bind:key="c.d">
-      <img v-bind:src="c" height="50" />
-    </li>
-    </ul>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script>
-  new Vue({
-    el: '#app',
-    data: {
-      video: {},
-      canvas: {},
-      captures: []
-    },
-    mounted () {
-      this.video = this.$refs.video
-      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-          this.video.srcObject = stream
-          this.video.play()
-        })
-      }
-    },
-    methods: {
-      capture () {
-        this.canvas = this.$refs.canvas
-        this.canvas.getContext('2d').drawImage(this.video, 0, 0, 500, 500)
-        this.captures.push(this.canvas.toDataURL('image/png'))
-        console.log(this.captures)
-      }
-    }
-  });
-</script>
-
-
-
-
-
-<script type="text/javascript">
-let imgElement = document.getElementById('imageSrc');
-let inputElement = document.getElementById('fileInput');
-
-
-inputElement.addEventListener('change', (e) => {
-  imgElement.src = URL.createObjectURL(e.target.files[0]);
-}, false);
-
-
-imgElement.onload = function() {
-  let mat = cv.imread(imgElement);
-  //let mat1 = cv.bitwise_not(mat)
-  cv.imshow('canvasOutput', mat);
-  mat.delete();
-};
-
-
-var Module = {
-  // https://emscripten.org/docs/api_reference/module.html#Module.onRuntimeInitialized
-  onRuntimeInitialized() {
-    document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
-  }
-};
-
-</script>
-<script async src="opencv.js" type="text/javascript"></script>
 </body>
 </html>
