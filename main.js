@@ -39,19 +39,19 @@ async function run(captures){
   if (result == 0){
     n = "eraser"
   } else if (result == 1){
-    n = "glueliquid"
+    n = "eraser"//gluestick　一旦テスト用
   } else if (result == 2){
     n = "note"
   } else if (result == 3){
     n = "pen"
   } else if (result == 4){
-    n = "pencase"
+    n = "pen_case"
   } else if (result == 5){
     n = "pencil"
   } else if (result == 6){
     n = "ruler"
-  } else if (result == 6){
-    n = "gluestick"
+  } else if (result == 7){
+    n = "note"//gluestick 一旦テスト用
   }  
 
 
@@ -168,17 +168,11 @@ async function run(captures){
 
   cv.imshow('canvasOutput',dst2);//combinedが二つ合成、dst2がシンプルなもの。
   
-  list.push(dst2);
+  list.push(n);
 
   alert(list)
   if (list.length === 3) {
-    const imageBase64Array = list.map((imageMat, index) => {
-      const canvas = document.createElement('canvas');
-      cv.imshow(canvas, imageMat);
-      return "myImages" + (index + 1) + "=" + encodeURIComponent(canvas.toDataURL("image/jpeg").split(',')[1]);
-    });
-  
-    const nextPageURL = "example.html?" + imageBase64Array.join("&");
+    const nextPageURL = `example.html?value1=${list[0]}&value2=${list[1]}&value3=${list[2]}`;
     window.location.href = nextPageURL;
   }
 
