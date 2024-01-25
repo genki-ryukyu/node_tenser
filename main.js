@@ -1,7 +1,7 @@
 let list = [];
 
 async function run(captures){
-  const model = await tf.loadLayersModel('tfjs_model/model4.json');
+  const model = await tf.loadLayersModel('tfjs_model/model12.json');
   // const targetImg = document.getElementById('input_image');
 
   const latestImageData = captures[captures.length - 1];
@@ -39,19 +39,19 @@ async function run(captures){
   if (result == 0){
     n = "eraser"
   } else if (result == 1){
-    n = "eraser"//gluestick　一旦テスト用
+    n = "note"//gluestick　一旦テスト用
   } else if (result == 2){
-    n = "note"
-  } else if (result == 3){
     n = "pen"
-  } else if (result == 4){
-    n = "pen_case"
-  } else if (result == 5){
+  } else if (result == 3){
     n = "pencil"
-  } else if (result == 6){
+  } else if (result == 4){
+    n = "pencase"
+  } else if (result == 5){
     n = "ruler"
+  } else if (result == 6){
+    n = "liquidglue"
   } else if (result == 7){
-    n = "note"//gluestick 一旦テスト用
+    n = "stickglue"//gluestick 一旦テスト用
   }  
 
 
